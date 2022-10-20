@@ -1,10 +1,11 @@
-from unittest.util import _MAX_LENGTH
 from django.db import models
-from django.forms import IntegerField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Thing(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, blank=False, unique=True)
 
-    description = models.CharField(max_length=520)
+    description = models.CharField(max_length=120, blank=True, unique=False)
 
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(
+        unique=False,
+        validators= [MinValueValidator(0), MaxValueValidator(100)])
